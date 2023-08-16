@@ -62,7 +62,6 @@ public class UsuarioController {
 	        usuarioExistente.setTelefono(usuarioActualizado.getTelefono());
 	        usuarioExistente.setTipo(usuarioActualizado.getTipo());
 	        usuarioExistente.setPassword(usuarioActualizado.getPassword());
-	        usuarioExistente.setMetodopago(usuarioActualizado.getMetodopago());
 	        usuarioserviceimpl.save(usuarioExistente); // Guardar las actualizaciones
 
 	        return ResponseEntity.ok("Usuario actualizado exitosamente");

@@ -1,8 +1,6 @@
 package com.example.proyecto.lenguajes.services.impl;
-
 import java.util.List;
 import java.util.NoSuchElementException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.proyecto.lenguajes.modelos.Orden;
@@ -59,9 +57,13 @@ public class RepartidorServiceImpl implements RepartidorService {
     
 	@Override
 	public Repartidor asignarOrdenes(Integer repartidorId, Integer ordenId) {
+		
 		Repartidor repartidor = obtenerRepartidorPorId(repartidorId);
-	    Orden orden = ordenServiceImpl.obtenerOrdenPorId(ordenId); // Supongamos que tienes un método para obtener la Orden por su ID
+		
+	    Orden orden = ordenServiceImpl.obtenerOrdenPorId(ordenId);
+	    // Supongamos que tienes un método para obtener la Orden por su ID
 	    orden.setRepartidor(repartidor);
+	    
 	    repartidor.getOrdenes().add(orden);
 	    repartidorRepository.save(repartidor);
 	    return repartidor;

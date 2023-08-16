@@ -1,26 +1,33 @@
 package com.example.proyecto.lenguajes.controllers;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.text.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.example.proyecto.lenguajes.modelos.DetalleOrden;
+import com.example.proyecto.lenguajes.modelos.MetodoPago;
 import com.example.proyecto.lenguajes.modelos.Orden;
 import com.example.proyecto.lenguajes.modelos.Producto;
 import com.example.proyecto.lenguajes.modelos.Usuario;
 import com.example.proyecto.lenguajes.services.impl.CarritoServicesImpl;
 import com.example.proyecto.lenguajes.services.impl.DetalleOrdenServiceImpl;
 import com.example.proyecto.lenguajes.services.impl.DireccionServicesImpl;
+import com.example.proyecto.lenguajes.services.impl.MetodoPagoServiceImpl;
 import com.example.proyecto.lenguajes.services.impl.OrdenServiceImpl;
 import com.example.proyecto.lenguajes.services.impl.ProductoServiceImpl;
 import com.example.proyecto.lenguajes.services.impl.UsuarioServiceImpl;
+
 
 
 @RestController
@@ -54,6 +61,10 @@ public class CarritoController {
 	
 	@Autowired
     private DireccionServicesImpl envioService;
+	
+	
+	@Autowired
+	private MetodoPagoServiceImpl metodopagoserviceImpl;
 	
 	
 	
@@ -109,7 +120,9 @@ public class CarritoController {
 	
 	
 	@PostMapping("/generarorden")
-	public ResponseEntity<Void> generarOrden(@RequestParam int usuarioId ,@RequestParam double xusuario,@RequestParam double yusuario) {
+	public ResponseEntity<Void> generarOrden(@RequestParam int usuarioId ,@RequestParam double xusuario,@RequestParam double yusuario,
+			@RequestParam int metodopagoId) {
+		metodopagoserviceImpl.asignar(usuarioId, metodopagoId);
 	    Usuario usuario = usuarioService.findByIdO(usuarioId);
 	    if (usuario != null) {
 	        List<DetalleOrden> detallesOrden = carritoServiceImpl.obtenerCarrito(usuario);
@@ -148,12 +161,54 @@ public class CarritoController {
 	    }
 	}
 	
+	
+	
+	
+	
 	@GetMapping("/calcularCosto")
     public ResponseEntity<Double> calcularCostoEnvio(
             @RequestParam double xUsuario, @RequestParam double yUsuario) {
         double costoEnvio = envioService.calcularCostoEnvio(xUsuario, yUsuario);
         return ResponseEntity.ok(costoEnvio);
     }
+	
+	@PostMapping("/metodopago/guardar")
+    public ResponseEntity<String> save(@RequestBody MetodoPago metodoPago) {
+       // Verificar si la fecha de vencimiento de la tarjeta está vencida
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/yyyy");
+        try {
+            Date fechaVencimientoDate = sdf.parse(metodoPago.getFechaVencimiento());
+            Date fechaActual = new Date();
+
+            if (fechaVencimientoDate.before(fechaActual)) {
+                return ResponseEntity.badRequest().body("La tarjeta está vencida");
+            }
+        } catch (ParseException e) {
+            return ResponseEntity.badRequest().body("Formato de fecha de vencimiento inválido");
+        }
+        
+        metodopagoserviceImpl.save(metodoPago);
+        return ResponseEntity.ok("Método de pago guardado exitosamente");
+    }
+	
+	@PutMapping("/metodopago/editar")
+	public MetodoPago editarMetodoPago( @RequestBody MetodoPago id) {
+		return metodopagoserviceImpl.save(id);
+	}
+	
+	
+	@GetMapping("/metodopago/listar")
+	public List<MetodoPago> listarMetodoPago() {
+		return metodopagoserviceImpl.ListarMetodoPago();
+	}
+	
+	@GetMapping("metodopago/obtener/{id}")
+	public MetodoPago obtenerById( @PathVariable int id) {
+		return metodopagoserviceImpl.obtenerMetodoDeOrdenPagoPorId(id);
+	}
+
+	
+	
 	
 	
 	

@@ -1,10 +1,6 @@
 package com.example.proyecto.lenguajes.services.impl;
-
 import org.springframework.stereotype.Service;
-
 import com.example.proyecto.lenguajes.services.DireccionServices;
-
-
 
 @Service
 public class DireccionServicesImpl implements DireccionServices {

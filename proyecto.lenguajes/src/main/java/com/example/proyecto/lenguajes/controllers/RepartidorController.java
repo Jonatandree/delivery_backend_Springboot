@@ -31,25 +31,28 @@ public class RepartidorController {
         Repartidor nuevoRepartidor = repartidorServiceImpl.crearRepartidor(repartidor);
         return new ResponseEntity<>(nuevoRepartidor, HttpStatus.CREATED);
     }
+    
 
-     @GetMapping("obtener/{id}")
+     @GetMapping("/obtener/{id}")
     public ResponseEntity<Repartidor> obtenerRepartidorPorId(@PathVariable Integer id) {
         Repartidor repartidor = repartidorServiceImpl.obtenerRepartidorPorId(id);
         return new ResponseEntity<>(repartidor, HttpStatus.OK);
     }
      
 
-    @GetMapping
+    @GetMapping("/listar")
     public ResponseEntity<List<Repartidor>> obtenerTodosLosRepartidores() {
         List<Repartidor> repartidores = repartidorServiceImpl.obtenerTodosLosRepartidores();
         return new ResponseEntity<>(repartidores, HttpStatus.OK);
     }
+    
 
-    @DeleteMapping("eliminar/{id}")
+    @DeleteMapping("/eliminar/{id}")
     public ResponseEntity<Void> eliminarRepartidor(@PathVariable Integer id) {
         repartidorServiceImpl.eliminarRepartidor(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+    
     
     @PutMapping("/asignarpedido")
     public ResponseEntity<Repartidor> asignarPedido(@RequestParam Integer repartidorId, @RequestParam Integer ordenId) {

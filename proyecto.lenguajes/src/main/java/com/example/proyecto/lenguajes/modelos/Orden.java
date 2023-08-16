@@ -8,7 +8,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,13 +35,25 @@ public class Orden {
 
 	
     @ManyToOne
+    @JsonIgnore
 	private Usuario usuario;
 	
     
 	@OneToMany(mappedBy = "orden")
+	@JsonIgnore
 	private List<DetalleOrden> detalle;
 	
 
     @ManyToOne
+    @JsonIgnore
 	private Repartidor repartidor;
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
