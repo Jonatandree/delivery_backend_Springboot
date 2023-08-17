@@ -33,6 +33,8 @@ public class MetodoPagoServiceImpl  implements MetodoPagoService {
 		return pagoRepository.findById(id).orElse(null);
 	}
 	
+	
+	
 
 	@Override
 	public Usuario asignar(Integer usuarioId, Integer metodopagoId) {
@@ -43,6 +45,11 @@ public class MetodoPagoServiceImpl  implements MetodoPagoService {
 		usuariorepository.save(usuario);
 		return usuario;
 	}
+	
+
+	
+	
+	
 	
 	
 	@Override

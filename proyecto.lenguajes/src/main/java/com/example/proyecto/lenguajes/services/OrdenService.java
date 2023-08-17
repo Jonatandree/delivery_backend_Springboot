@@ -13,5 +13,6 @@ public interface OrdenService {
 	String generarNumeroOrden();
 	List<Orden> findByUsuario (Usuario usuario);
 	Orden obtenerOrdenPorId(Integer id);
+	List<Orden> findByUsuario_Id(Integer usuarioId);
 }
 

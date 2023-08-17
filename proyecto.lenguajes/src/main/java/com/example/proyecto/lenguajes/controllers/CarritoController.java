@@ -38,7 +38,7 @@ public class CarritoController {
 	List<DetalleOrden> detalles = new ArrayList<DetalleOrden>();
 	
 	// datos de la orden
-		Orden orden = new Orden();
+	Orden orden = new Orden();
 	
 	@Autowired
 	private OrdenServiceImpl ordenserviceimpl;
@@ -51,6 +51,7 @@ public class CarritoController {
 	
 	@Autowired
 	private DetalleOrdenServiceImpl detalleordenserviseimpl;
+	
 	
 	
 	@Autowired
@@ -124,6 +125,8 @@ public class CarritoController {
 			@RequestParam int metodopagoId) {
 		metodopagoserviceImpl.asignar(usuarioId, metodopagoId);
 	    Usuario usuario = usuarioService.findByIdO(usuarioId);
+	    
+	    
 	    if (usuario != null) {
 	        List<DetalleOrden> detallesOrden = carritoServiceImpl.obtenerCarrito(usuario);
 	        if (!detallesOrden.isEmpty()) {
@@ -145,6 +148,7 @@ public class CarritoController {
 	                producto.setCantidad(producto.getCantidad() - detalle.getCantidad());
 	                productoServiceimpl.save(producto);
 	            }
+	            
 	            subtotal *= 1.15; // Aplicar impuesto del 15%
 	            double costoEnvio = direccionServicesImpl.calcularCostoEnvio(xusuario, yusuario);
 	            total = costoEnvio + subtotal;        
@@ -163,14 +167,14 @@ public class CarritoController {
 	
 	
 	
-	
-	
 	@GetMapping("/calcularCosto")
     public ResponseEntity<Double> calcularCostoEnvio(
             @RequestParam double xUsuario, @RequestParam double yUsuario) {
         double costoEnvio = envioService.calcularCostoEnvio(xUsuario, yUsuario);
         return ResponseEntity.ok(costoEnvio);
     }
+	
+	
 	
 	@PostMapping("/metodopago/guardar")
     public ResponseEntity<String> save(@RequestBody MetodoPago metodoPago) {
@@ -190,6 +194,11 @@ public class CarritoController {
         metodopagoserviceImpl.save(metodoPago);
         return ResponseEntity.ok("Método de pago guardado exitosamente");
     }
+	
+	
+	
+	
+	
 	
 	@PutMapping("/metodopago/editar")
 	public MetodoPago editarMetodoPago( @RequestBody MetodoPago id) {

@@ -36,7 +36,6 @@ public class OrdenController {
     }
 	
 	
-	
 	@GetMapping("/obtener/{id}")
 	public ResponseEntity<Orden> obtenerOrdenPorId(@PathVariable Integer id) {
 	    Optional<Orden> optionalOrden = ordenesserviceimpl.findById(id);
@@ -48,6 +47,13 @@ public class OrdenController {
 	        return ResponseEntity.notFound().build();
 	    }
 	}
+	
+	
+	@GetMapping("/usuario/{usuarioId}")
+    public ResponseEntity<List<Orden>> obtenerOrdenesPorUsuario(@PathVariable Integer usuarioId) {
+        List<Orden> ordenes = ordenesserviceimpl.findByUsuario_Id(usuarioId);
+        return ResponseEntity.ok(ordenes);
+    }
 	
 	
 	

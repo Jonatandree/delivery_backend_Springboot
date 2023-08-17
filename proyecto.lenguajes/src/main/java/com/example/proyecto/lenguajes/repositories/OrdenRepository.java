@@ -12,4 +12,8 @@ import com.example.proyecto.lenguajes.modelos.Usuario;
 public interface OrdenRepository extends JpaRepository<Orden, Integer>{
     
     List<Orden> findByUsuario (Usuario usuario);
+    
+    List<Orden> findByUsuario_Id(Integer usuarioId);
+    
+    
 }

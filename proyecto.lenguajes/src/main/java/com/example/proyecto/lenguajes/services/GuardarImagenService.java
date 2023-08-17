@@ -18,7 +18,7 @@ public class GuardarImagenService {
 	
 
     public String saveImage(MultipartFile file) throws IOException {
-        String nombreImagen = UUID.randomUUID().toString() + ".jpg"; // Cambia la extensión según tus necesidades
+        String nombreImagen = UUID.randomUUID().toString() + ".jpg"; 
         Path imagePath = Paths.get(imageFolderPath, nombreImagen);
         Files.copy(file.getInputStream(), imagePath, StandardCopyOption.REPLACE_EXISTING);
         return nombreImagen;

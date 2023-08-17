@@ -13,13 +13,9 @@ public interface DetalleOrdenService {
     	DetalleOrden save (DetalleOrden detalleOrden);
     	public Optional<DetalleOrden> get(Integer id);
     	public void delete(Integer id);
-    	
     	public void eliminar(DetalleOrden detalleOrden);
-    	
     	public void eliminarProductoCarrito(List<DetalleOrden> ordenesNueva);
-    	
     	public void eliminarProductoDelCarrito(Integer idProducto);
-    	
     	void guardarDetalleOrden(DetalleOrden detalleOrden);
         void eliminarDetalleOrden(DetalleOrden detalleOrden);
         List<DetalleOrden> obtenerDetallesOrdenPorUsuario(Usuario usuario);

@@ -1,12 +1,13 @@
 package com.example.proyecto.lenguajes.modelos;
 
-import java.util.Date;
+
 
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
@@ -39,6 +40,7 @@ public class MetodoPago {
     
     
     @ManyToOne
+    @JoinColumn(name="usuario_id")
     @JsonIgnore
     private Usuario usuario;
     

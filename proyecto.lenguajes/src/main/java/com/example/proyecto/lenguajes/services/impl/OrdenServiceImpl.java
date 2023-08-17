@@ -49,5 +49,13 @@ public class OrdenServiceImpl implements OrdenService{
 	public Orden obtenerOrdenPorId(Integer id) {
 		return ordenRepository.findById(id).orElse(null);
 	}
+	
+	
+	
+
+	@Override
+	public List<Orden> findByUsuario_Id(Integer usuarioId) {
+		return ordenRepository.findByUsuario_Id(usuarioId);
+	}
     
 }

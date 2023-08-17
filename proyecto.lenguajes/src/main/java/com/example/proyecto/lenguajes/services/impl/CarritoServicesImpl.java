@@ -21,7 +21,6 @@ public class CarritoServicesImpl implements CarritoServices {
 
 	@Override
 	public void agregarProductoAlCarrito(Usuario usuario, Producto producto, int cantidad) {
-		// TODO Auto-generated method stub
 		
 		DetalleOrden detalleOrden = new DetalleOrden();
         detalleOrden.setNombre(producto.getNombre());
@@ -36,24 +35,23 @@ public class CarritoServicesImpl implements CarritoServices {
 
 	@Override
 	public void eliminarProductoDelCarrito(Usuario usuario, Producto producto) {
-		// TODO Auto-generated method stub
-		
 		DetalleOrden detalleOrden = detalleOrdenService.obtenerDetalleOrdenPorUsuarioYProducto(usuario, producto);
         if (detalleOrden != null) {
             detalleOrdenService.eliminarDetalleOrden(detalleOrden);
         }
-		
 	}
+	
 
 	@Override
 	public List<DetalleOrden> obtenerCarrito(Usuario usuario) {
 		return detalleOrdenService.obtenerDetallesOrdenPorUsuario(usuario);
 	}
+	
+	
 
 	@Override
 	public void vaciarCarrito(Usuario usuario) {
 		List<DetalleOrden> detallesOrden = detalleOrdenService.obtenerDetallesOrdenPorUsuario(usuario);
         detallesOrden.forEach(detalleOrdenService::eliminarDetalleOrden);
     } 
-
 }

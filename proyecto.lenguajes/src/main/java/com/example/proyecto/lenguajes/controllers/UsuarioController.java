@@ -74,6 +74,7 @@ public class UsuarioController {
     @Autowired
     private AuthService authService;
     
+    
     @PostMapping("/acceder")
     public ResponseEntity<String> acceder(@RequestBody Usuario usuario) {
         Optional<Usuario> user = authService.autenticarUsuario(usuario.getEmail(), usuario.getPassword());
@@ -88,6 +89,7 @@ public class UsuarioController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Credenciales inválidas");
         }
     }
+    
     
     @DeleteMapping("/eliminar/{id}")
     public String eliminarUsuario(@PathVariable int id) {
